@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+         .box{
+            position: inherit;
+            border:1px solid black;
+            border-radius: 10px;
+            margin:50px 200px 100px 200px;
+         }
+         p{
+            border:1px solid  #490b68ee; 
+            border-radius: 10px;
+            margin:50px 200px 2px 200px;
+            color:aliceblue;
+            background-color:  #490b68ee;
+            padding:20px 50px 20px 250px;
+         }
+         input,select{
+            position: inherit;
+            border:1px solid black;
+            border-radius: 5px;
+            height:30px;
+            width:500px;
+         }
+         table{
+            padding:20px 200px 20px 200px;
+         }
+         #submit{
+            border:1px solid black;
+            border-radius: 5px;
+            height:30px;
+            background-color: rgba(81, 196, 77, 0.773);
+            color:white;
+         }
+         td{
+            padding-top: 10px;
+         }
+    </style>
+</head>
+<body>
+    <p>The brochure will be downloaded after submitting the following form</p>
+    <div class="box">
+            <table>
+                <tr><td><input type="text" placeholder="Name" id="name"></td></tr>
+                <tr><td><input type="text" placeholder="E-mail Address" id="email"></td></tr>
+                <tr><td><input type="text" placeholder="Phone Number" id="phnum"></td></tr>
+                <tr><td><select id="prgrm">
+                <option value="Program Intrested in" selected>Program Intrested in</option>
+                  <option value="M.TECH">M.TECH</option>
+                  <option value="B.TECH">B.TECH</option>
+                  <option value="MBA">MBA</option>
+                </select></td></tr>
+                <tr><td><select id="state">
+                    <option value="State and union Territories" selected>State and union Territories</option>
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Srilanka">Srilanka</option>
+                    <option value="Myanmar">Myanmar</option>
+                  </select></td></tr>
+                <tr id="city"><td><input type="text" placeholder="City" name="city"></td></tr>
+                <tr><td><input type="submit" value="Submit" id="submit" onclick="fun()"></td></tr>
+            </table>
+    </div>
+</body>
+<script>
+   
+   function fun(){
+   let data = document.getElementsByTagName("input");
+   let flag = 0;
+   for(let i = 0; i < data.length-1; i++){
+      if(data[i].value.length == 0){
+         flag = 1;
+      }
+   }
+   if(flag == 0){
+   var xhttp = new XMLHttpRequest();
+   xhttp.open("POST", "http://127.0.0.1/LAB/regno.php", true);
+   xhttp.send("name=data[0].value&email=data[1].value&phnnum=data[2].value&prgrm=data[3].value&state=data[4].value&city=data[5].value");
+   let response = JSON.parse(xhttp.responseText);
+   if(response.result == "success"){
+      location.replace("thankyou.html");
+   }
+   else{
+      alert("enter the valid data");
+   }
+   }
+}
+</script>
+</html>
